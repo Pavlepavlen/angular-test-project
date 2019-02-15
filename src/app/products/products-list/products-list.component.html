@@ -1,0 +1,6 @@
+<h3 class="products-list-heading">All avaliable products below</h3>
+<app-products-item 
+  *ngFor="let productElement of products.products" 
+  [product]='productElement'
+  (productSelected)="onProductSelected(productElement)">
+</app-products-item>

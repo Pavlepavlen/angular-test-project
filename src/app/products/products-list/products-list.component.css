@@ -1,0 +1,6 @@
+.products-list-heading {
+    text-align: center;
+    color: var(--main-blue);
+    padding: 20px;
+    border-bottom: 3px solid var(--main-blue);
+}

@@ -1,0 +1,16 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300i,400,400i,700');
+
+:root {
+    --main-blue: #111D4A;
+    --main-sand: #FFCF99;
+    --main-white: #FFF8F0;
+    --main-red: #92140C;
+    --main-gray: #1E1E24;
+}
+
+* {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+}

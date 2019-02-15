@@ -1,0 +1,33 @@
+.products-wrapper {
+    display: flex;
+    flex-direction: row;
+    background-color: #FFEEDB;
+}
+
+.products-list-wrapper {
+    flex: 1;
+}
+
+.products-details-wrapper {
+    flex: 2;
+    position: relative;
+}
+
+.select-product {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-7%, -50%);
+    text-align: center;
+    color: var(--main-blue);
+    font-size: 22px;
+    padding: 10px;
+    border: 1px solid var(--main-blue);
+}
+
+
+@media screen and (min-width: 760px) {
+    
+    
+}
+

@@ -1,0 +1,14 @@
+<div class="products-wrapper">
+  <div class="products-list-wrapper">
+    <app-products-list
+      (productWasSelected)="selectedProduct = $event"></app-products-list>
+  </div>
+  <div class="products-details-wrapper">
+    <app-products-details
+      *ngIf="selectedProduct; else initialText"
+      [product]="selectedProduct"></app-products-details>
+      <ng-template #initialText>
+        <p class="select-product">Please select a product from the list to get more information</p>
+      </ng-template>
+  </div>
+</div>
