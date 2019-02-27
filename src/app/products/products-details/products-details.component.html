@@ -3,9 +3,9 @@
     <img class="product-detail-image" [src]="product.img" alt="">
     <div class="product-detail-main-description">
       <h3 class="product-detail-heading"><span class="product-unique">Product</span> : {{ product.name }}</h3>
-      <span class="product-detail-main-item product-detail-brand">Company : {{ product.brand }}</span>
-      <span class="product-detail-main-item product-detail-price">Price : {{ product.price | currency: product.currency }}</span>
-      <span class="product-detail-main-item product-detail-code">Code : {{ product.asin }}</span>
+      <span class="product-detail-main-item product-detail-brand"><strong>Company</strong> : {{ product.brand }}</span>
+      <span class="product-detail-main-item product-detail-price"><strong>Price</strong> : <span class="price-uniq">{{ product.price | currency: product.currency }}</span></span>
+      <span class="product-detail-main-item product-detail-code"><strong>Code</strong> : {{ product.asin }}</span>
     </div>
   </div>
   <div class="product-detail-additional-info">

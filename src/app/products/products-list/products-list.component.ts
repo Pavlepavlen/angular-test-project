@@ -14,6 +14,7 @@ export class ProductsListComponent implements OnInit {
 
   public products = [];
   public filteredProducts = [];
+  choosenElement = {};
   prod = 'products';
 
   constructor(private productsService: ProductsService) { }
@@ -26,6 +27,11 @@ export class ProductsListComponent implements OnInit {
       });
   }
 
+  onClickMade(productElem) {
+    this.choosenElement = productElem;
+    console.log(this.choosenElement);
+  }
+
   assignProductsCopy(data) {
     if (data !== 0) {
       return this.filteredProducts = Object.assign([], data);
@@ -35,6 +41,10 @@ export class ProductsListComponent implements OnInit {
 
   filterItem(value) {
     value = value.trim();
+    if ( value === '' ) {
+      this.choosenElement = {};
+    }
+
     if ( !value ) {
       this.assignProductsCopy(0);
     }

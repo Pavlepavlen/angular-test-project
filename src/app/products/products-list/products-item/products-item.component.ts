@@ -10,9 +10,11 @@ export class ProductsItemComponent implements OnInit {
 
   @Input() product: Product;
 
+  @Input() selected: {};
+
   @Output() productSelected = new EventEmitter<void>();
 
-  public selected = false;
+  // public selected = false;
 
   public listClass = true;
 

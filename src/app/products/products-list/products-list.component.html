@@ -1,7 +1,9 @@
 <h3 class="products-list-heading">All avaliable products below</h3>
 <input type="text" #myInput class="products-input" placeholder="Search..." (input)="filterItem(myInput.value)">
-<app-products-item 
+<app-products-item
   *ngFor="let productElement of filteredProducts.products" 
   [product]='productElement'
+  (click)="onClickMade(productElement)"
+  [selected]="choosenElement"
   (productSelected)="onProductSelected(productElement)">
 </app-products-item>

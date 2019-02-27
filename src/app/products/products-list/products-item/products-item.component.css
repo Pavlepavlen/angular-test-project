@@ -38,6 +38,10 @@
     font-size: 110%;
 }
 
+.selected {
+    border: 2px solid var(--main-red);
+}
+
 @media screen and (min-width: 760px) {
     
     .list-item-wrapper {
