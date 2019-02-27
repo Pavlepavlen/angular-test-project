@@ -1,6 +1,6 @@
 .product-detail-wrapper {
     position: fixed;
-    top: 102px;
+    top: 100px;
     display: flex;
     flex-direction: column;
     margin: 20px;
@@ -8,7 +8,7 @@
     padding: 10px;
     font-size: 0.8rem;
     background-color: #E6ECEF;
-    box-shadow: 0px 7px 21px 3px rgba(0,0,0,0.75);
+    box-shadow: 0px 1px 7px 2px rgba(0,0,0,0.75);
 }
 
 .product-detail-main-info {
@@ -18,8 +18,7 @@
 }
 
 .product-detail-image {
-    max-width: 180px;
-    width: 100%;
+    max-height: 200px;
 }
 
 .product-unique {
@@ -30,6 +29,8 @@
     display: flex;
     flex-direction: column;
     margin: 0;
+    color: var(--main-blue);
+
 }
 
 .product-detail-link {
@@ -45,6 +46,7 @@
 .product-detail-heading {
     text-align: justify;
     font-size: 0.8rem;
+    color: var(--main-blue);
 }
 
 .product-detail-additional-info {
@@ -52,14 +54,18 @@
     flex-direction: row;
     justify-content: space-around;
     margin: 10px 0;
+    color: var(--main-blue);
 }
 
 .product-detail-additional-item {
     display: block;
+    color: var(--main-blue);
+    font-size: 0.7rem;
 }
 
 .product-detail-additional-else {
     align-self: center;
+    color: var(--main-blue);
 }
 
 .product-detail-additional-heading {
@@ -70,43 +76,45 @@
     text-align: center;
 }
 
+.price-uniq {
+  font-weight: bold;
+  color: var(--main-red);
+}
+
 
 @media screen and (min-width: 760px) {
 
     .product-detail-wrapper {
-        font-size: 1.1rem;
-        top: 150px;
+        font-size: 1.0rem;
+        top: 100px;
     }
 
     .product-detail-main-info {
         flex-direction: row;
-        max-height: 250px;
     }
 
     .product-detail-image {
-        max-width: 250px;
+        max-height: 250px;
     }
 
     .product-detail-heading {
         text-align: justify;
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
 
     .product-detail-main-item {
-        margin: 10px;
+        margin: 5px;
     }
 
     .product-detail-main-description {
-        margin: 10px;
+        margin: 5px;
     }
 
     .product-detail-main-item {
-        margin: 10px;
+        margin: 5px;
     }
 
     .product-detail-additional-heading {
         font-size: 1rem;
     }
-    
-    
 }

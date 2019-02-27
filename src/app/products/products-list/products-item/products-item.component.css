@@ -4,9 +4,10 @@
     padding: 5px;
     margin: 5px;
     display: flex;
+    flex-direction: column;
     cursor: pointer;
     font-size: 0.7rem;
-    box-shadow: 0px 7px 21px 3px rgba(0,0,0,0.75);
+    box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
 }
 
 
@@ -19,7 +20,7 @@
 }
 
 .list-item-image {
-    width: 50px;
+    width: 60px;
 }
 
 .list-item-description {
@@ -38,20 +39,17 @@
 }
 
 @media screen and (min-width: 760px) {
-
-    .list-item-image {
-        width: 70px;
-    }
     
     .list-item-wrapper {
         font-size: 1rem;
+        flex-direction: row;
+    }
+
+    .list-item-image {
+        width: 70px;
     }
 
     .list-item-name {
         font-size: 1rem;
     }
 }
-
-
-
-

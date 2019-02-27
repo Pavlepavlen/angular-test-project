@@ -51,13 +51,13 @@ export class Product {
     this.price = obj.price;
     this.weight = obj.weight;
     this.updatedAt = obj.updated_at;
-    this.name = 'hello';
+    this.name = obj.name;
     this.shippingWeight = obj.shipping_weight;
     this.domain = obj.domain;
     this.votesCount = obj.votes_count;
     this.dailyCashflow = obj.daily_cashflow;
     this.currency = obj.currency;
-    this.img = obj.img.split('\\').join('');
+    this.img = obj.img;
     this.dailySales = obj.daily_sales;
     this.stars = obj.stars;
     this.bsrValue = obj.bsr_value;
