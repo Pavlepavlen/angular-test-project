@@ -13,6 +13,6 @@ export class ProductsService {
   constructor(private http: HttpClient) { }
 
   getData() {
-    return this.http.get<IProducts[]>(this.url);
+    return this.http.get<IProducts>(this.url);
   }
 }

@@ -1,12 +1,9 @@
 export interface IProducts {
         count_products: number;
         page_count: number;
-        products: Array<any>;
-        page: number;
-}
-
-
-/* in_potential_products: boolean,
+        products: [
+            {
+                in_potential_products: boolean,
                 asin: string,
                 price: number,
                 weight: number,
@@ -25,4 +22,8 @@ export interface IProducts {
                 size: Array<any>,
                 link: string,
                 bsr_category: string,
-                brand: string */
+                brand: string
+            }
+        ];
+        page: number;
+}

@@ -4,7 +4,7 @@
   <input id="search-input" type="text" #myInput class="products-input" placeholder="Search..." (input)="filterItem(myInput.value)">
 </div>
 <app-products-item
-  *ngFor="let productElement of filteredProducts.products" 
+  *ngFor="let productElement of filteredProducts" 
   [product]='productElement'
   (click)="onClickMade(productElement)"
   [selected]="choosenElement"

@@ -8,12 +8,12 @@ import { ProductsService } from 'src/app/products.service';
 })
 export class HeaderComponent implements OnInit {
 
-  public products = [];
+  public countProducts: number;
 
   constructor(private productsService: ProductsService) { }
 
   ngOnInit() {
     this.productsService.getData()
-      .subscribe(data => this.products = data);
+      .subscribe(data => this.countProducts = data.count_products);
   }
 }
