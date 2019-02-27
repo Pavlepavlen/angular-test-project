@@ -5,12 +5,20 @@
     border-bottom: 3px solid var(--main-blue);
 }
 
-.products-input{
-    display: block;
-    padding: 3px 3px 3px 10px;
+.input-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
     margin: 10px auto;
 }
 
-.selected{
-    background-color: blue !important;
+.products-input{
+    padding: 5px 5px 5px 10px;
+    background-color: #E6ECEF;
+    color: var(--main-blue);
+    border: 1px solid var(--main-blue);
+    font-weight: 300;
+    outline: none;
+    letter-spacing: 1.5px;
 }

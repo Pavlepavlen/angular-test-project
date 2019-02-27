@@ -1,5 +1,8 @@
 <h3 class="products-list-heading">All avaliable products below</h3>
-<input type="text" #myInput class="products-input" placeholder="Search..." (input)="filterItem(myInput.value)">
+<div class="input-wrapper">
+  <label for="search-input">Search for desire one!</label>
+  <input id="search-input" type="text" #myInput class="products-input" placeholder="Search..." (input)="filterItem(myInput.value)">
+</div>
 <app-products-item
   *ngFor="let productElement of filteredProducts.products" 
   [product]='productElement'
