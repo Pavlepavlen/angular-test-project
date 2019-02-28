@@ -1,6 +1,13 @@
-<header>
-  <div class="header-wrapper">
-    <a><span class="header-text header-uniq">Welcome to the <span class="shop-uniq">shop</span></span></a>
-    <span class="header-text">Products count: <span class="header-count">{{ countProducts }}</span></span>
-  </div>
+<header class="container-fluid">
+  <nav class="header-wrapper row">
+    <div class="col-12 col-sm-6 header-text text-md-left text-lg-left text-center">
+      <span class="header-uniq">
+        <a href="#" class="main-header-logo">Welcome to the <span class="text-uppercase shop-uniq">shop</span>
+        </a>
+    </span>
+    </div>
+    <div class="col-12 col-sm-6 header-text text-md-right text-lg-rigth text-center">Products count: 
+      <span class="header-count-uniq">{{ countProducts }}</span>
+    </div>
+  </nav>
 </header>

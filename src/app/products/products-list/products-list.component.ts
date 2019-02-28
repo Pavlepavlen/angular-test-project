@@ -15,12 +15,16 @@ export class ProductsListComponent implements OnInit {
   public products: IProducts['products'];
   public filteredProducts = [];
   public choosenElement = {};
+  public categoryList = [];
+  public choosenCategoryIndex = 0;
 
-  constructor(private productsService: ProductsService) { }
+  constructor(private productsService: ProductsService) {}
 
   ngOnInit() {
+    this.categoryList.push('Show All');
     this.productsService.getData()
       .subscribe(data => {
+        this.getCategoryList(data.products);
         this.filteredProducts = data.products;
         return this.products = data.products;
       });
@@ -28,6 +32,13 @@ export class ProductsListComponent implements OnInit {
 
    assignProductsCopy() {
      this.filteredProducts = Object.assign([], this.products);
+   }
+
+   getCategoryList(products) {
+    products.forEach(element => {
+      this.categoryList.push(element.bsr_category);
+    });
+    this.categoryList = this.categoryList.filter((cat, index, arr) => index === arr.indexOf(cat));
    }
 
    filterItem(value) {
@@ -40,7 +51,21 @@ export class ProductsListComponent implements OnInit {
      });
    }
 
-   onClickMade(product) {
+   onCategoryChosen(category: string) {
+
+    if  (category === 'Show All') {
+      this.assignProductsCopy();
+      this.choosenCategoryIndex = 0;
+    } else {
+      this.assignProductsCopy();
+      this.choosenCategoryIndex = this.categoryList.indexOf(category);
+      this.filteredProducts = this.filteredProducts.filter(item => {
+        return item.bsr_category === category;
+      });
+    }
+   }
+
+   onClickMade(product: Product) {
      this.choosenElement = product;
    }
 

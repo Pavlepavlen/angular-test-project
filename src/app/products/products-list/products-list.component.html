@@ -1,7 +1,23 @@
-<h3 class="products-list-heading">All avaliable products below</h3>
-<div class="input-wrapper">
-  <label for="search-input">Search for desire one!</label>
-  <input id="search-input" type="text" #myInput class="products-input" placeholder="Search..." (input)="filterItem(myInput.value)">
+<h4 class="products-list-heading text-center p-3 m-0">All avaliable products below</h4>
+<div class="container-fluid">
+  <div class="search-field-wrapper row text-center align-items-center mt-3 mb-3 m-0">
+    <div class="input-wrapper col-12 p-0 pb-3 pb-lg-0 pb-md-0">
+      <label for="search-input">Search for desire one!</label>
+      <input  id="search-input" 
+              type="text" 
+              #myInput 
+              class="products-input" 
+              placeholder="Search..." 
+              (input)="filterItem(myInput.value)">
+    </div>
+    <ul class="caterogy-wrapper col-12 p-0 mt-2">
+        <li *ngFor="let category of categoryList; let i = index"
+            (click)="onCategoryChosen(category)"
+            [ngClass]="{'category-item': true, 'selected': i === choosenCategoryIndex}">
+          <span [ngClass]="{'category-text': true}">{{ category }}</span>
+        </li>
+    </ul>
+  </div>
 </div>
 <app-products-item
   *ngFor="let productElement of filteredProducts" 

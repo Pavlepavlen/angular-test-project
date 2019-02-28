@@ -1,33 +1,35 @@
-<div class="product-detail-wrapper">
-  <div class="product-detail-main-info">
-    <img class="product-detail-image" [src]="product.img" alt="">
-    <div class="product-detail-main-description">
-      <h3 class="product-detail-heading"><span class="product-unique">Product</span> : {{ product.name }}</h3>
-      <span class="product-detail-main-item product-detail-brand"><strong>Company</strong> : {{ product.brand }}</span>
-      <span class="product-detail-main-item product-detail-price"><strong>Price</strong> : <span class="price-uniq">{{ product.price | currency: product.currency }}</span></span>
-      <span class="product-detail-main-item product-detail-code"><strong>Code</strong> : {{ product.asin }}</span>
+<div class="product-detail-wrapper row">
+  <div class="product-detail-main-info col-12 row p-0 m-0">
+    <div class="products-detail-image-wrapper col-12 col-sm-5">
+    <img class="product-detail-image" [src]="product.img" alt="product-photo">
+    </div>
+    <div class="product-detail-main-description col-12 col-sm-7">
+      <p class="product-detail-main-item product-detail-brand"><strong>Company</strong> : {{ product.brand }}</p>
+      <p class="product-detail-main-item product-detail-price"><strong>Price</strong> : <span class="price-uniq">{{ product.price | currency: product.currency }}</span></p>
+      <p class="product-detail-main-item product-detail-code"><strong>Code</strong> : {{ product.asin }}</p>
     </div>
   </div>
-  <div class="product-detail-additional-info">
-    <div class="product-detail-additional-general">
-      <h6 class="product-detail-additional-heading">Additional info</h6>
+  <h3 class="product-detail-heading col-12"><span class="product-unique">Product</span> : {{ product.name }}</h3>
+  <div class="product-detail-additional-info col-12 p-0 row">
+    <div class="product-detail-additional-general col-md-4 col-6 p-0">
+      <h6 class="product-detail-additional-heading"><strong>Additional info</strong></h6>
       <span class="product-detail-additional-item product-detail-stars">Stars : {{ product.stars }}</span>
       <span class="product-detail-additional-item product-detail-category">Category : {{ product.bsr_category }}</span>
       <span class="product-detail-additional-item product-detail-weight">Weight : {{ product.weight | number: '.2-3' }}</span>
       <span class="product-detail-additional-item product-detail-value">Value : {{ product.bsr_value }}</span>
     </div>
-    <div class="proproduct-detail-additional-item duct-detail-additional-sizes">
-        <h6 class="product-detail-additional-heading">Sizes</h6>
-        <span class="product-detail-additional-item product-detail-width">Widht : {{ product.size[0] | number: '.2-3' }}</span>
-        <span class="product-detail-additional-item product-detail-height">Height : {{ product.size[1] | number: '.2-3'}}</span>
-        <span class="product-detail-additional-item product-detail-depth">Depth : {{ product.size[2] | number: '.2-3'}}</span>
+    <div class="duct-detail-additional-sizes col-md-4 col-6 p-0">
+        <h6 class="product-detail-additional-heading"><strong>Sizes</strong></h6>
+        <span class="product-detail-additional-item product-detail-width">Widht : {{ product.size[0] ? product.size[0] : '-' | number: '.2-3' }}</span>
+        <span class="product-detail-additional-item product-detail-height">Height : {{ product.size[1] ? product.size[1] : '-' | number: '.2-3'}}</span>
+        <span class="product-detail-additional-item product-detail-depth">Depth : {{ product.size[2] ? product.size[2] : '-' | number: '.2-3'}}</span>
     </div>
-  </div>
-  <div class="product-detail-additional-else">
-      <h6 class="product-detail-additional-heading">Addition</h6>
-      <span class="product-detail-additional-item product-detail-width">Shipping Weight : {{ product.brand_class ? product.brand_class : 'not included' }}</span>
-      <span class="product-detail-additional-item product-detail-height">Daily Sales : {{ product.daily_sales }}</span>
-      <span class="product-detail-additional-item product-detail-depth">Votes Count : {{ product.votes_count }}</span>
+    <div class="product-detail-additional-else col-md-4 col-12 p-0">
+        <h6 class="product-detail-additional-heading"><strong>Addition</strong></h6>
+        <span class="product-detail-additional-item product-detail-width">Shipping Weight : {{ product.brand_class ? product.brand_class : '-' }}</span>
+        <span class="product-detail-additional-item product-detail-height">Daily Sales : {{ product.daily_sales }}</span>
+        <span class="product-detail-additional-item product-detail-depth">Votes Count : {{ product.votes_count }}</span>
+    </div>
   </div>
   <a class="product-detail-link" [href]="product.link" target="_black">Read More</a>
 </div>
