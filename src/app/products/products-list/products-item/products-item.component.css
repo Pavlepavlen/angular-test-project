@@ -52,13 +52,12 @@
 
 .list-item-description-wrapper {
     padding: 20px;
-    color:#111D4A;
 }
 
-/* .list-item-description {
+.list-item-description {
     color:#111D4A;
     margin: 0;
-} */
+}
 
 .list-item-name {
     font-size: 1.2rem;

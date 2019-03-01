@@ -14,8 +14,6 @@ export class ProductsDetailsComponent implements OnInit {
   // tslint:disable-next-line:no-output-on-prefix
   @Output() onClosedEmit = new EventEmitter<string>();
 
-  show = true;
-
   constructor() {
   }
 
@@ -24,7 +22,6 @@ export class ProductsDetailsComponent implements OnInit {
   }
 
   onClose(val: string) {
-    this.show = false;
     this.onClosedEmit.emit(val);
   }
 
