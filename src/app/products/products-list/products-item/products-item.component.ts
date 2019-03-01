@@ -14,7 +14,7 @@ export class ProductsItemComponent implements OnInit {
 
   @Output() productSelected = new EventEmitter<void>();
 
-  // public selected = false;
+  slicedProductName: string;
 
   public listClass = true;
 
@@ -27,6 +27,7 @@ export class ProductsItemComponent implements OnInit {
 
   ngOnInit() {
     this.product.img = decodeURI(this.product.img);
+    this.slicedProductName = this.product.name.split(' ').slice(0, 3).join(' ');
   }
 
   onSelected() {

@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { AppComponent } from './app.component';
 import { ProductsService } from './products.service';
@@ -27,7 +27,7 @@ import { JoinPipe } from './join.pipe';
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    NgbModule.forRoot()
+    AngularFontAwesomeModule
   ],
   providers: [ProductsService],
   bootstrap: [AppComponent]

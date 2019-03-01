@@ -1,18 +1,17 @@
-<div class="products-wrapper row m-0">
-  <div class="background">
-  </div>
-  <div class="products-list-wrapper col-5 pl-sm-3 pr-sm-3 pl-1 pr-1">
-    <app-products-list
-        (productWasSelected)="selectedProduct = $event">
-    </app-products-list>
-  </div>
-  <div class="products-details-wrapper col-7 pl-sm-3 pr-sm-3 pl-1 pr-1">
-    <app-products-details
-      *ngIf="selectedProduct; else initialText"
-      [product]="selectedProduct">
-    </app-products-details>
-      <ng-template #initialText>
-        <p class="select-product">Please select a product from the list to get more information</p>
-      </ng-template>
+<div class="container-fluid">
+  <div class="products-wrapper row">
+    <div class="background">
+    </div>
+    <div class="products-list-wrapper col-12">
+      <app-products-list
+          (productWasSelected)="selectedProduct = $event">
+      </app-products-list>
+    </div>
+
+      <app-products-details
+        *ngIf="selectedProduct"
+        [product]="selectedProduct"
+        (onClosedEmit)="onClosed($event)">
+      </app-products-details>
   </div>
 </div>

@@ -8,11 +8,18 @@ import { Product } from './product.model';
 })
 export class ProductsComponent implements OnInit {
 
-  selectedProduct: Product;
+  selectedProduct;
+  show: boolean;
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onClosed(event: any) {
+    if (event === 'close') {
+      this.selectedProduct = null;
+    }
   }
 
 }

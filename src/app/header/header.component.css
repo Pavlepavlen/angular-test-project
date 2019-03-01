@@ -1,54 +1,58 @@
-.header-wrapper {
-    background-color: var(--main-gray);
-    font-size: 1.7rem;
+.navigation {
+    background-color: var(--main-blue);
+    padding: 10px;
 }
 
-.header-uniq {
-    text-transform: capitalize;
-    color: var(--main-red) !important;
-}
-
-.shop-uniq {
-    color: var(--main-red);
-}
-
-.header-count-uniq {
+.fa-shopping-basket,
+.fa-bars {
     color: var(--main-white);
+    font-size: 1.5rem;
 }
 
-.header-text {
-    color: var(--main-red);
+.animate-bars-open {
+    animation: move-open .5s;
+    transform: rotate(90deg);
 }
 
-.main-header-logo{
-    cursor: pointer;
-    text-decoration: none;
+.animate-bars-close {
+    animation: move-close .5s;
+    transform: rotate(0deg);
+}
+
+.navbar-collapse {
+    justify-content: flex-start;
+}
+
+.prod-uniq {
     color: var(--main-white);
+    text-transform: uppercase;
 }
 
-.main-header-logo:hover,
-.main-header-logo:active {
+.active {
     color: white;
+    text-decoration: underline;
 }
 
 @media screen and (min-width: 576px) {
-
-    .header-text {
-        padding: 20px;
+    .navbar-collapse {
+        justify-content: flex-end;
     }
+}
 
-    .header-wrapper {
-        font-size: 1.3rem;
+@keyframes move-open {
+    from {
+        transform: rotate(0);
     }
-} 
-
-@media screen and (min-width: 768px) {
-
-    .header-text {
-        padding: 20px;
+    to {
+        transform: rotate(90deg);
     }
+}
 
-    .header-wrapper {
-        font-size: 1.8rem;
+@keyframes move-close {
+    from {
+        transform: rotate(90deg);
+    }
+    to {
+        transform: rotate(0);
     }
 }
