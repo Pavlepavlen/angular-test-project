@@ -9,11 +9,11 @@
           <div class="input-wrapper col-12 col-sm-6 col-md-6 col-lg-6 mb-3">
             <label for="search-input">Search for desire one!</label>
             <input  id="search-input" 
-                    type="text" 
-                    #myInput 
+                    type="text"
                     class="products-input" 
                     placeholder="Search..." 
-                    (input)="filterItem(myInput.value)">
+                    [(ngModel)]="inputValue"
+                    (input)="filterItem()">
           </div>
           <div class="col-12 col-sm-6 col-md-6 col-lg-6">
             <ul class="caterogy-wrapper">

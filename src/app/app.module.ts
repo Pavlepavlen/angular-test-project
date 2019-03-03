@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { ProductsService } from './products.service';
@@ -13,6 +14,11 @@ import { ProductsDetailsComponent } from './products/products-details/products-d
 import { ProductsItemComponent } from './products/products-list/products-item/products-item.component';
 import { JoinPipe } from './join.pipe';
 
+const appRoutes: Routes = [
+  { path: '', component: AppComponent },
+  { path: 'categories/:category', component: AppComponent }
+];
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,13 +27,16 @@ import { JoinPipe } from './join.pipe';
     ProductsListComponent,
     ProductsDetailsComponent,
     ProductsItemComponent,
-    JoinPipe
+    JoinPipe,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    RouterModule.forRoot(
+      appRoutes
+    )
   ],
   providers: [ProductsService],
   bootstrap: [AppComponent]
