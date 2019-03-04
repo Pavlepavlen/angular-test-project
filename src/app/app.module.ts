@@ -13,6 +13,8 @@ import { ProductsListComponent } from './products/products-list/products-list.co
 import { ProductsDetailsComponent } from './products/products-details/products-details.component';
 import { ProductsItemComponent } from './products/products-list/products-item/products-item.component';
 import { JoinPipe } from './join.pipe';
+import { StoreModule } from '@ngrx/store';
+import { productsReducer } from './store/productsReducer/products.reduser';
 
 const appRoutes: Routes = [
   { path: '', component: AppComponent },
@@ -36,7 +38,10 @@ const appRoutes: Routes = [
     AngularFontAwesomeModule,
     RouterModule.forRoot(
       appRoutes
-    )
+    ),
+    StoreModule.forRoot({
+      products: productsReducer
+    })
   ],
   providers: [ProductsService],
   bootstrap: [AppComponent]

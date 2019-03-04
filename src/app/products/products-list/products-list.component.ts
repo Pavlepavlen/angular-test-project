@@ -1,9 +1,14 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { ProductsService } from 'src/app/products.service';
-import { Product } from '../product.model';
+import { Product, IProduct } from '../product.model';
 import { IProducts } from '../../products';
 import { Router } from '@angular/router';
 import { ReturnStatement } from '@angular/compiler';
+
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../app.state';
+import * as ProductActions from '../../store/productsReducer/products.actions';
 
 @Component({
   selector: 'app-products-list',
@@ -14,6 +19,8 @@ export class ProductsListComponent implements OnInit {
 
   @Output() productWasSelected = new EventEmitter<Product>();
 
+  public products$: Observable<IProduct[]>;
+
   public products: IProducts['products'];
   public filteredProducts = [];
   public choosenElement = {};
@@ -22,7 +29,10 @@ export class ProductsListComponent implements OnInit {
   public inputValue;
 
   constructor(private productsService: ProductsService,
-              private router: Router) {}
+              private router: Router,
+              private store: Store<AppState>) {
+    this.products$ = store.select('products');
+  }
 
   ngOnInit() {
     this.categoryList.push('Show All');
@@ -32,6 +42,7 @@ export class ProductsListComponent implements OnInit {
         this.filteredProducts = data.products;
         this.inputValue = this.router.parseUrl(this.router.url).queryParams.productName;
         this.products = data.products;
+        this.store.dispatch(new ProductActions.SetPersons(data.products));
         this.onCategoryChosen(this.getCategoryPath());
         console.log(this.router.parseUrl(this.router.url).queryParams);
         // return this.products = data.products;

@@ -1,4 +1,4 @@
-interface IProduct {
+export interface IProduct {
 
             in_potential_products: boolean;
             asin: string;
