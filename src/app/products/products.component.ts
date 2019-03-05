@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from './product.model';
+import { IProduct } from '../interfaces/product.model';
+import { Observable, observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from '../app.state';
+import * as ProductActions from '../store/productsReducer/products.actions';
+import { AppStates, ProductsState } from '../store/productsReducer/products.reducer.factory';
 
 @Component({
   selector: 'app-products',
@@ -8,18 +13,24 @@ import { Product } from './product.model';
 })
 export class ProductsComponent implements OnInit {
 
-  selectedProduct;
+  productsState$: Observable<ProductsState>;
+  productSelected;
   show: boolean;
 
-  constructor() { }
+  constructor(private store: Store<AppStates>) {
+    this.productsState$ = store.select('productsState');
+    this.productsState$.subscribe(data => {
+      this.productSelected = data.choosenProduct;
+    });
+  }
 
   ngOnInit() {
   }
 
-  onClosed(event: any) {
+  /* onClosed(event: any) {
     if (event === 'close') {
       this.selectedProduct = null;
     }
-  }
+  } */
 
 }

@@ -1,5 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Product } from '../../product.model';
+import { IProduct } from '../../../interfaces/product.model';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../app.state';
+import * as ProductActions from '../../../store/productsReducer/products.actions';
+import { AppStates, ProductsState } from '../../../store/productsReducer/products.reducer.factory';
 
 @Component({
   selector: 'app-products-item',
@@ -8,21 +13,20 @@ import { Product } from '../../product.model';
 })
 export class ProductsItemComponent implements OnInit {
 
-  @Input() product: Product;
+  public productsState$: Observable<ProductsState>;
 
-  @Input() selected: {};
+  @Input() product: IProduct;
 
-  @Output() productSelected = new EventEmitter<void>();
+  public slicedProductName: string;
+  public isSelected: boolean;
+  public selectedProduct: IProduct;
 
-  slicedProductName: string;
-
-  public listClass = true;
-
-  public listClasses = '.list-item-wrapper';
-
-  constructor() {
-    this.selected = false;
-    this.listClass = true;
+  constructor(private store: Store<AppStates>) {
+    this.productsState$ = store.select('productsState');
+    this.productsState$.subscribe(data => {
+      this.selectedProduct = data.choosenProduct;
+    });
+    this.isSelected = false;
   }
 
   ngOnInit() {
@@ -31,15 +35,14 @@ export class ProductsItemComponent implements OnInit {
   }
 
   onSelected() {
-    this.selected = true;
-    this.productSelected.emit();
+    this.store.dispatch(new ProductActions.ChooseProduct(this.product));
+    this.addActiveClass();
   }
 
-  classes() {
-    if ( this.selected ) {
-     this.listClasses = '.list-item-wrapper active';
-    } else {
-      this.listClasses = '.list-item-wrapper';
+  addActiveClass() {
+    // compare by values not by references
+    if ( JSON.stringify(this.selectedProduct) === JSON.stringify(this.product) ) {
+      this.isSelected = true;
     }
   }
 

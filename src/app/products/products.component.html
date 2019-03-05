@@ -3,15 +3,12 @@
     <div class="background">
     </div>
     <div class="products-list-wrapper col-12">
-      <app-products-list
-          (productWasSelected)="selectedProduct = $event">
+      <app-products-list>
       </app-products-list>
     </div>
 
       <app-products-details
-        *ngIf="selectedProduct"
-        [product]="selectedProduct"
-        (onClosedEmit)="onClosed($event)">
+        *ngIf="productSelected">
       </app-products-details>
   </div>
 </div>

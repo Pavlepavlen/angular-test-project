@@ -1,4 +1,4 @@
-import { IProduct } from './products/product.model';
+import { IProduct } from './interfaces/product.model';
 
 
 export interface AppState {

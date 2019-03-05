@@ -1,14 +1,16 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, AfterViewInit, OnChanges } from '@angular/core';
 import { ProductsService } from 'src/app/products.service';
-import { Product, IProduct } from '../product.model';
-import { IProducts } from '../../products';
-import { Router } from '@angular/router';
+import { IProduct } from '../../interfaces/product.model';
+import { IProducts } from '../../interfaces/products.model';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ReturnStatement } from '@angular/compiler';
 
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
 import * as ProductActions from '../../store/productsReducer/products.actions';
+import { AppStates, ProductsState } from '../../store/productsReducer/products.reducer.factory';
+import { CategoryService } from 'src/app/shared/category.service';
 
 @Component({
   selector: 'app-products-list',
@@ -17,39 +19,43 @@ import * as ProductActions from '../../store/productsReducer/products.actions';
 })
 export class ProductsListComponent implements OnInit {
 
-  @Output() productWasSelected = new EventEmitter<Product>();
+  public productsState$: Observable<ProductsState>;
 
-  public products$: Observable<IProduct[]>;
-
-  public products: IProducts['products'];
-  public filteredProducts = [];
+  public products: IProduct[];
+  public filteredProducts: IProduct[];
   public choosenElement = {};
   public categoryList = [];
   public choosenCategoryIndex = 0;
   public inputValue;
 
+  public actualCategory;
+
   constructor(private productsService: ProductsService,
               private router: Router,
-              private store: Store<AppState>) {
-    this.products$ = store.select('products');
+              private activatedRoute: ActivatedRoute,
+              private categoryService: CategoryService,
+              private store: Store<AppStates>) {
+    this.productsState$ = store.select('productsState');
+    this.productsState$.subscribe(data => {
+
+      this.filteredProducts = data.filteredProducts;
+      this.categoryList = this.categoryService.createCategoryList(data.initialProducts);
+    });
+    this.store.dispatch(new ProductActions.GetProducts());
+
   }
 
   ngOnInit() {
-    this.categoryList.push('Show All');
+    this.activatedRoute.params.subscribe(url => {
+      this.inputValue = url.productName;
+    });
     this.productsService.getData()
-      .subscribe(data => {
-        this.getCategoryList(data.products);
-        this.filteredProducts = data.products;
-        this.inputValue = this.router.parseUrl(this.router.url).queryParams.productName;
-        this.products = data.products;
-        this.store.dispatch(new ProductActions.SetPersons(data.products));
-        this.onCategoryChosen(this.getCategoryPath());
-        console.log(this.router.parseUrl(this.router.url).queryParams);
-        // return this.products = data.products;
+      .subscribe(() => {
+         this.onCategoryChosen(this.getCategoryPathFromURL());
       });
   }
 
-  getCategoryPath(): string {
+  getCategoryPathFromURL(): string {
     let filteredPath;
     if (this.router.url.indexOf('/categories') !== -1) {
       const tempPath = this.router.url.split('/')[2].split('');
@@ -65,75 +71,53 @@ export class ProductsListComponent implements OnInit {
     }
   }
 
-   assignProductsCopy() {
-     this.filteredProducts = Object.assign([], this.products);
-   }
-
-   getCategoryList(products) {
-    products.forEach(element => {
-      this.categoryList.push(element.bsr_category);
-    });
-    this.categoryList = this.categoryList.filter((cat, index, arr) => index === arr.indexOf(cat));
-   }
-
-   filterItem() {
-     if ( !this.inputValue ) {
-       if (this.getCategoryPath() === 'Show All') {
-          this.assignProductsCopy();
+  onSearchInputEntered() {
+    if ( !this.inputValue ) {
+        if (this.getCategoryPathFromURL() === 'Show All') {
+          this.store.dispatch(new ProductActions.CopyProducts());
           this.router.navigate([], {});
           return;
-       } else {
-          this.onCategoryChosen(this.getCategoryPath());
-          return;
-       }
-     }
-
-     this.filterProducts();
-
-     this.router.navigate([], {queryParams: {productName: this.inputValue}});
-   }
-
-   onCategoryChosen(category: string) {
-     console.log('hello');
-     if  (category === 'Show All') {
-      this.assignProductsCopy();
-      this.choosenCategoryIndex = 0;
-
-      this.filterProducts();
-
-      this.router.navigate([''], {queryParams: this.router.parseUrl(this.router.url).queryParams});
     } else {
-      this.assignProductsCopy();
-
-      this.filterProducts();
-
-      this.choosenCategoryIndex = this.categoryList.indexOf(category);
-      this.filteredProducts = this.filteredProducts.filter(item => {
-        return item.bsr_category === category;
-      });
-
-      if (!this.inputValue) {
-        this.router.navigate(['/categories', category], {});
-      } else {
-        this.router.navigate(['/categories', category], {queryParams: this.router.parseUrl(this.router.url).queryParams});
-      }
+          this.onCategoryChosen(this.getCategoryPathFromURL());
+          return;
+        }
     }
-   }
-
-   filterProducts() {
-     if (this.inputValue) {
-        this.filteredProducts = this.filteredProducts.filter(item => {
-          return !item.name.toLowerCase().indexOf(this.inputValue.toLowerCase());
-      });
-     }
+    this.filterProducts();
+    this.router.navigate([], {queryParams: {productName: this.inputValue}});
   }
 
-   onClickMade(product: Product) {
-     this.choosenElement = product;
-   }
+  onCategoryChosen(category: string) {
+    if  (category === 'Show All') {
+    this.store.dispatch(new ProductActions.CopyProducts());
+    this.choosenCategoryIndex = 0;
 
-  onProductSelected(product: Product) {
-    this.productWasSelected.emit(product);
+    this.filterProducts();
+
+    this.router.navigate([''], {queryParams: this.router.parseUrl(this.router.url).queryParams});
+  } else {
+    this.store.dispatch(new ProductActions.CopyProducts());
+
+    this.filterProducts();
+
+    this.choosenCategoryIndex = this.categoryList.indexOf(category);
+    this.filteredProducts = this.filteredProducts.filter(item => {
+      return item.bsr_category === category;
+    });
+
+    if (!this.inputValue) {
+      this.router.navigate(['/categories', category], {});
+    } else {
+      this.router.navigate(['/categories', category], {queryParams: this.router.parseUrl(this.router.url).queryParams});
+    }
+  }
+  }
+
+  filterProducts() {
+    if (this.inputValue) {
+      this.store.dispatch(new ProductActions.FilterProducts(this.inputValue));
+    } else {
+      this.store.dispatch(new ProductActions.CopyProducts());
+    }
   }
 
 }

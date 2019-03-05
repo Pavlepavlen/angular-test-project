@@ -22,7 +22,8 @@ export interface IProduct {
             brand: string;
 }
 
-export class Product {
+
+/* export class Product {
     public inPotentialProducts: boolean;
     public asin: string;
     public price: number;
@@ -68,7 +69,5 @@ export class Product {
     this.brand = obj.brand;
 
     }
-
-
-}
+} */
 

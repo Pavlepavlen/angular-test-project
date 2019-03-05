@@ -3,18 +3,23 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { RouterModule, Routes } from '@angular/router';
+import { StoreModule } from '@ngrx/store';
+import { HttpClientModule } from '@angular/common/http';
+import { EffectsModule } from '@ngrx/effects';
 
 import { AppComponent } from './app.component';
 import { ProductsService } from './products.service';
-import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './header/header.component';
 import { ProductsComponent } from './products/products.component';
 import { ProductsListComponent } from './products/products-list/products-list.component';
 import { ProductsDetailsComponent } from './products/products-details/products-details.component';
 import { ProductsItemComponent } from './products/products-list/products-item/products-item.component';
-import { JoinPipe } from './join.pipe';
-import { StoreModule } from '@ngrx/store';
-import { productsReducer } from './store/productsReducer/products.reduser';
+import { GetProductsEffect } from './store/productsEffects/products.effect';
+
+// import { productsReducer } from './store/productsReducer/products.reducer';
+import { productsReducers } from './store/productsReducer/products.reducer.factory';
+import { CategoryService } from './shared/category.service';
+import { fromEventPattern } from 'rxjs';
 
 const appRoutes: Routes = [
   { path: '', component: AppComponent },
@@ -29,7 +34,6 @@ const appRoutes: Routes = [
     ProductsListComponent,
     ProductsDetailsComponent,
     ProductsItemComponent,
-    JoinPipe,
   ],
   imports: [
     BrowserModule,
@@ -39,11 +43,12 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes
     ),
-    StoreModule.forRoot({
-      products: productsReducer
-    })
+    StoreModule.forRoot(productsReducers),
+    EffectsModule.forRoot([
+      GetProductsEffect
+    ])
   ],
-  providers: [ProductsService],
+  providers: [ProductsService, CategoryService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

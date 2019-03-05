@@ -1,4 +1,4 @@
-<div (click)="onSelected()" [ngClass]="{'list-item-wrapper': true, 'selected': selected === product}">
+<div (click)="onSelected()" [ngClass]="{'list-item-wrapper': true, 'selected': isSelected}">
       <div class="list-item-image-wrapper">
         <img class="list-item-image" [src]="product.img" alt="">
         <span class="helper">
