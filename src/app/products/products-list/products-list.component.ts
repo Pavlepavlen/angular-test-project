@@ -1,17 +1,13 @@
 import { Component, OnInit, EventEmitter, Output, AfterViewInit, OnChanges } from '@angular/core';
 import { ProductsService } from 'src/app/shared/products.service';
 import { IProduct } from '../../interfaces/product.model';
-import { IProducts } from '../../interfaces/products.model';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ReturnStatement } from '@angular/compiler';
 
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../app.state';
 import * as ProductActions from '../../store/productsReducer/products.actions';
 import { AppStates, ProductsState } from '../../store/productsReducer/products.reducer.factory';
 import { CategoryService } from 'src/app/shared/category.service';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-products-list',
@@ -30,15 +26,13 @@ export class ProductsListComponent implements OnInit {
   public categoryList = [];
   public inputValue;
   public selectedCategory;
-  public params;
 
 
   constructor(private productsService: ProductsService,
               private router: Router,
               private categoryService: CategoryService,
               private aRoute: ActivatedRoute,
-              private store: Store<AppStates>,
-              private loc: Location) {
+              private store: Store<AppStates>) {
     this.productsState$ = store.select('productsState');
     this.productsState$.subscribe(data => {
 
@@ -49,25 +43,35 @@ export class ProductsListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.onCategoryChosen(this.categoryService.getCategoryPathFromURL());
-    this.inputValue = this.router.parseUrl(this.router.url).queryParams.productName;
-    this.onSearchInputCheck();
+    this.aRoute.queryParams.subscribe(data => {
+      this.inputValue = data.productName;
+    });
+
+    this.productsService.onInitialCategoryChosen(this.categoryService.getCategoryPathFromURL());
+
+    this.productsService.onInitialSearchInputCheck(this.inputValue);
+
   }
 
 
   onSearchInputCheck() {
     if ( !this.inputValue ) {
       this.store.dispatch(new ProductActions.CopyProducts());
-      this.router.navigate([], {queryParams: {}});
+      this.router.navigate(['/products/categories/', this.selectedCategory], {});
+      return;
     }
     this.store.dispatch(new ProductActions.FilterProducts(this.inputValue));
-    this.router.navigate([], {queryParams: {productName: this.inputValue}});
+    this.router.navigate(['/products/categories/', this.selectedCategory], {queryParams: {productName: this.inputValue}});
+
   }
 
   onCategoryChosen(category: string) {
     this.selectedCategory = category;
-    const url = ['/products/categories/', this.selectedCategory].join('');
-    this.loc.go(url);
+    if (this.inputValue) {
+      this.router.navigate(['/products/categories/', this.selectedCategory], {queryParams: {productName: this.inputValue}});
+    } else {
+      this.router.navigate(['/products/categories/', this.selectedCategory], {});
+    }
     this.store.dispatch(new ProductActions.ChooseCategory(this.selectedCategory));
     this.store.dispatch(new ProductActions.FilterProducts(this.inputValue));
   }
