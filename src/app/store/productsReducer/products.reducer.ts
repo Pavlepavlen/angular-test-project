@@ -2,6 +2,7 @@ import { Action, ActionReducerMap } from '@ngrx/store';
 import { IProduct } from '../../interfaces/product.model';
 import * as ProductsActions from './products.actions';
 import { CategoryService } from '../../shared/category.service';
+import { store } from '@angular/core/src/render3';
 
 const initialState = {
     isLoading: false,
@@ -10,7 +11,8 @@ const initialState = {
     filteredProducts: [],
     choosenProduct: null,
     categories: [],
-    searchInputValue: ''
+    searchInputValue: '',
+    selectedCategory: null
 };
 
 export function productsReducer(state = initialState, action: ProductsActions.Actions) {
@@ -25,12 +27,23 @@ export function productsReducer(state = initialState, action: ProductsActions.Ac
         }
 
         case ProductsActions.GET_PRODUCTS_SUCCESS: {
+            let categories;
+            const tempList = [];
+
+            action.payload.forEach((element, index) => {
+                tempList[index] = element.bsr_category;
+            });
+
+            categories = tempList.filter((cat, index, arr) => index === arr.indexOf(cat));
+            categories.unshift('Show All');
+
             return {
                 ...state,
                 isLoading: false,
                 isLoadSuccess: true,
                 initialProducts: action.payload,
                 filteredProducts: action.payload,
+                categories
             };
         }
 
@@ -42,10 +55,30 @@ export function productsReducer(state = initialState, action: ProductsActions.Ac
             };
         }
 
-        case ProductsActions.COPY_PRODUCTS:
+        case ProductsActions.CREATE_CATEGORY_LIST: {
             return {
                 ...state,
-                filteredProducts: state.initialProducts
+                categories: action.payload
+            };
+        }
+
+        case ProductsActions.CHOOSE_CATEGORY: {
+            return {
+                ...state,
+                selectedCategory: action.payload
+            };
+        }
+
+        case ProductsActions.COPY_PRODUCTS:
+            const products = state.initialProducts.filter(item => {
+                if (state.selectedCategory === 'Show All') {
+                    return item;
+                }
+                return item.bsr_category === state.selectedCategory;
+            });
+            return {
+                ...state,
+                filteredProducts: products
             };
 
         case ProductsActions.CHOOSE_PRODUCT: {
@@ -58,7 +91,14 @@ export function productsReducer(state = initialState, action: ProductsActions.Ac
         case ProductsActions.FILTER_PRODUCTS: {
             const inputValue = action.payload;
 
-            const filteredProducts = state.initialProducts.filter(item => {
+            let filteredProducts = state.initialProducts.filter(item => {
+                if (state.selectedCategory === 'Show All') {
+                    return item;
+                }
+                return item.bsr_category === state.selectedCategory;
+            });
+
+            filteredProducts = filteredProducts.filter(item => {
                 return !item.name.toLowerCase().indexOf(inputValue.toLowerCase());
             });
 

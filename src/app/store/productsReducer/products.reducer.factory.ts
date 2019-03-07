@@ -11,6 +11,7 @@ export interface ProductsState {
     choosenProduct: IProduct;
     categories: string[];
     searchInputValue: string;
+    selectedCategory: string;
 }
 
 export interface AppStates {

@@ -7,9 +7,10 @@ export const FILTER_PRODUCTS = '[PRODUCTS] Filter';
 export const COPY_PRODUCTS = '[PRODUCTS] Copy';
 export const CHOOSE_PRODUCT = '[PRODUCTS] Choose';
 export const GET_PRODUCTS = '[PRODUCTS] Get';
-export const GET_PRODUCTS_SUCCESS = '[PRODUCTS] Get Success';
-export const GET_PRODUCTS_FAILED = '[PRODUCTS] Get Failed';
-export const ENTER_INPUT_VALUE = '[PRODUCTS] Get Failed';
+export const GET_PRODUCTS_SUCCESS = '[PRODUCTS] Get success';
+export const GET_PRODUCTS_FAILED = '[PRODUCTS] Get failed';
+export const CREATE_CATEGORY_LIST = '[PRODUCTS] Create category';
+export const CHOOSE_CATEGORY = '[PRODUCTS] Choose category';
 
 export class GetProducts implements Action {
     readonly type = GET_PRODUCTS;
@@ -43,10 +44,16 @@ export class FilterProducts implements Action {
     constructor(public payload: string = '') {}
 }
 
-export class EnterInputValue implements Action {
-    readonly type = ENTER_INPUT_VALUE;
+export class CreateCategoriesList implements Action {
+    readonly type = CREATE_CATEGORY_LIST;
 
-    constructor(public payload: string = '') {}
+    constructor(public payload: string[]) {}
+}
+
+export class ChooseCategory implements Action {
+    readonly type = CHOOSE_CATEGORY;
+
+    constructor(public payload: string) {}
 }
 
 
@@ -56,4 +63,5 @@ export type Actions =
     GetProducts |
     GetProductsSuccess |
     GetProductsFailed |
-    EnterInputValue;
+    CreateCategoriesList |
+    ChooseCategory;

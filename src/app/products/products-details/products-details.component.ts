@@ -18,7 +18,7 @@ export class ProductsDetailsComponent implements OnInit {
   // @Input() product: IProduct;
 
   // tslint:disable-next-line:no-output-on-prefix
-  @Output() onClosedEmit = new EventEmitter<string>();
+  // @Output() onClosedEmit = new EventEmitter<string>();
 
   product: IProduct;
   productsState$: Observable<ProductsState>;

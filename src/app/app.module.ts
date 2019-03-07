@@ -8,22 +8,25 @@ import { HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
 
 import { AppComponent } from './app.component';
-import { ProductsService } from './products.service';
+import { ProductsService } from './shared/products.service';
 import { HeaderComponent } from './header/header.component';
 import { ProductsComponent } from './products/products.component';
 import { ProductsListComponent } from './products/products-list/products-list.component';
 import { ProductsDetailsComponent } from './products/products-details/products-details.component';
 import { ProductsItemComponent } from './products/products-list/products-item/products-item.component';
 import { GetProductsEffect } from './store/productsEffects/products.effect';
+import { ProductResolver } from './shared/productsResolver/products.resolver';
 
-// import { productsReducer } from './store/productsReducer/products.reducer';
+
 import { productsReducers } from './store/productsReducer/products.reducer.factory';
 import { CategoryService } from './shared/category.service';
-import { fromEventPattern } from 'rxjs';
+import { HomeComponent } from './home/home.component';
 
 const appRoutes: Routes = [
-  { path: '', component: AppComponent },
-  { path: 'categories/:category', component: AppComponent }
+  { path: '', redirectTo: 'home', pathMatch: 'full'},
+  { path: 'home', component: HomeComponent },
+  { path: 'products/categories', redirectTo: 'products/categories/Show All', pathMatch: 'full'},
+  { path: 'products/categories/:categoryName', component: ProductsComponent, resolve: {prod: ProductResolver} }
 ];
 
 @NgModule({
@@ -34,6 +37,7 @@ const appRoutes: Routes = [
     ProductsListComponent,
     ProductsDetailsComponent,
     ProductsItemComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +52,7 @@ const appRoutes: Routes = [
       GetProductsEffect
     ])
   ],
-  providers: [ProductsService, CategoryService],
+  providers: [ProductsService, CategoryService, ProductResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

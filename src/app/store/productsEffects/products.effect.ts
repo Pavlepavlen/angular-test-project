@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 import { map, switchMap, catchError } from 'rxjs/operators';
 
 import * as ProductsActions from '../productsReducer/products.actions';
-import { ProductsService } from './../../products.service';
+import { ProductsService } from '../../shared/products.service';
 
 @Injectable()
 

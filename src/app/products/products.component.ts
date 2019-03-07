@@ -15,7 +15,6 @@ export class ProductsComponent implements OnInit {
 
   productsState$: Observable<ProductsState>;
   productSelected;
-  show: boolean;
 
   constructor(private store: Store<AppStates>) {
     this.productsState$ = store.select('productsState');
@@ -26,11 +25,5 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  /* onClosed(event: any) {
-    if (event === 'close') {
-      this.selectedProduct = null;
-    }
-  } */
 
 }
